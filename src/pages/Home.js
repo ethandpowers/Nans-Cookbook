@@ -21,6 +21,7 @@ function Home() {
     )
     const [authState, setAuthState] = React.useState(true);
     const [bottomNavValue, setBottomNav] = React.useState(1);
+    const navRef = React.useRef('navRef');
 
     const auth = getAuth();
     onAuthStateChanged(auth, (user => {
@@ -60,11 +61,11 @@ function Home() {
         return (
             <div className='container'>
 
-                <Search render={pageState.renderSearch} />
+                <Search render={pageState.renderSearch} bottomPadding={navRef.current.clientHeight}/>
                 <Recipes render={pageState.renderRecipes} />
                 <Settings render={pageState.renderSettings} />
 
-                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, }} elevation={3} ref={navRef} >
                     <BottomNavigation
                         showLabels
                         value={bottomNavValue}

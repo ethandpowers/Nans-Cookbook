@@ -5,8 +5,10 @@ export default function Settings(props){
         return null;
     }
 
-    
+
     return(
-        <h1>Settings</h1>
+        <div className="fullView" style={{paddingBottom: props.bottomPadding}}>
+            <h1>Settings</h1>
+        </div>
     )
 }
