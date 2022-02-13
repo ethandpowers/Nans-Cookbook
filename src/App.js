@@ -5,9 +5,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import Login from './pages/Login'
-import Signup from './pages/Signup'
 import Home from './pages/Home';
 import NotFound from './pages/NotFound'
+import SignUp from './pages/Signup.js';
 
 import {
   BrowserRouter as Router,
@@ -22,13 +22,13 @@ function App() {
         <Route path="/login" element={<Login />}>
         </Route>
 
-        <Route path="/signup" element={<Signup />}>
+        <Route path="/signup" element={<SignUp />}>
         </Route>
 
         <Route path="/home" element={<Home />}>
         </Route>
 
-        <Route path="/" element={<Signup />}>
+        <Route path="/" element={<SignUp />}>
         </Route>
 
         <Route path='*' element={<NotFound />} />
