@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Search from '../components/Search.js'
 import Recipes from '../components/Recipes.js'
 import Settings from '../components/Settings.js'
+import { useState } from '@hookstate/core';
 
 function Home() {
     const [pageState, setPageState] = React.useState(
@@ -19,16 +20,24 @@ function Home() {
             renderSettings: false,
         }
     )
-    const [authState, setAuthState] = React.useState(true);
+
     const [bottomNavValue, setBottomNav] = React.useState(1);
     const navRef = React.useRef('navRef');
 
+
+    //I am well aware that this is rather mesy, but IDK when I try to use a generic state, I keep gettings errors.  At leat this is functional
     const auth = getAuth();
+    const authState = useState(true)
+    const authenticated = authState.get()
     onAuthStateChanged(auth, (user => {
-        if (!user) {
-            authState = false
-        }
+        try {
+            if (!user) {
+                authState.set(false)
+            }
+        } catch (error) { }
     }))
+
+
 
     const handleBottomNav = (event, newValue) => {
         setBottomNav(newValue);
@@ -55,13 +64,13 @@ function Home() {
         }
     }
 
-    if (!authState) {
+    if (!authenticated) {
         return <Navigate to="/signin"></Navigate>
     } else {
         return (
             <div className='container'>
 
-                <Search render={pageState.renderSearch} bottomPadding={navRef.current.clientHeight}/>
+                <Search render={pageState.renderSearch} bottomPadding={navRef.current.clientHeight} />
                 <Recipes render={pageState.renderRecipes} />
                 <Settings render={pageState.renderSettings} />
 
