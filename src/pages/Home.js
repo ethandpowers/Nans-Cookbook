@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Navigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useState } from '@hookstate/core';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
@@ -13,12 +12,6 @@ import Recipes from '../components/Recipes.js'
 import Settings from '../components/Settings.js'
 
 function Home() {
-    const state = useState(
-        {
-            loggedIn: true,
-        }
-    )
-
     const [pageState, setPageState] = React.useState(
         {
             renderSearch: false,
@@ -26,24 +19,18 @@ function Home() {
             renderSettings: false,
         }
     )
+    const [authState, setAuthState] = React.useState(true);
     const [bottomNavValue, setBottomNav] = React.useState(1);
+
     const auth = getAuth();
-    const loggedIn = state.get().loggedIn;
     onAuthStateChanged(auth, (user => {
-        try {
-            if (!user) {
-                state.merge(
-                    {
-                        loggedIn: false,
-                    }
-                );
-            }
-        } catch (error) { }
+        if (!user) {
+            authState = false
+        }
     }))
 
     const handleBottomNav = (event, newValue) => {
         setBottomNav(newValue);
-        console.log(newValue)
         if (newValue === 0) {
             pageState.renderSearch = true;
             pageState.renderRecipes = false;
@@ -67,7 +54,7 @@ function Home() {
         }
     }
 
-    if (!loggedIn) {
+    if (!authState) {
         return <Navigate to="/signin"></Navigate>
     } else {
         return (
