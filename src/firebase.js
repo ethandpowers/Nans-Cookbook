@@ -6,6 +6,9 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
+    setPersistence,
+    inMemoryPersistence,
+    browserLocalPersistence,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -20,6 +23,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence)
+
 const db = getFirestore(app);
 
 //called upon the creation of a new user
@@ -70,5 +75,6 @@ export function isLoggedIn() {
 
 
 export function logOut() {
+    console.log('logging out')
     signOut(auth);
 }

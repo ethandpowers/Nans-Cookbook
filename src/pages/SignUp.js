@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,11 +10,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from '@hookstate/core';
-import { newUser } from '../firebase'
+import { newUser, isLoggedIn, logOut } from '../firebase'
+import { Link as RouteLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import globalState from '../store.js'
 
 const theme = createTheme();
 
 export default function SignUp() {
+    logOut();
     const state = useState(
         {
             validEmail: true,
@@ -25,12 +28,21 @@ export default function SignUp() {
         }
     );
 
+    const gState = useState(globalState);
+
+    const navigate = useNavigate();
+    const redirectHome = () => {
+        if (isLoggedIn()) {
+            navigate("/home");
+        }
+    }
+
     const validFirstName = state.get().validFirstName;
     const validLastName = state.get().validLastName;
     const validEmail = state.get().validEmail;
     const validPassword = state.get().validPassword;
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
@@ -68,7 +80,13 @@ export default function SignUp() {
         if (state.get().validEmail && state.get().validPassword && state.get().validFirstName && state.get().validLastName) {
             //code inside this if-statement will only execute if all form data is valid
             console.log('creating new user')
-            newUser(email, password, firstName, lastName)
+            let docRef = await newUser(email, password, firstName, lastName)
+            gState.merge(
+                {
+                    userDoc: docRef,
+                }
+            );
+            redirectHome();
         }
     };
 
@@ -149,9 +167,9 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <RouteLink to='/signin'>
                                     Already have an account? Sign in
-                                </Link>
+                                </RouteLink>
                             </Grid>
                         </Grid>
                     </Box>
