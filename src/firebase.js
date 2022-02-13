@@ -4,10 +4,9 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
+    //sendPasswordResetEmail,
     signOut,
     setPersistence,
-    inMemoryPersistence,
     browserLocalPersistence,
 } from "firebase/auth";
 

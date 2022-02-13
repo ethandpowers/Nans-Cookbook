@@ -33,7 +33,7 @@ export default function SignUp() {
     const navigate = useNavigate();
     const redirectHome = () => {
         if (isLoggedIn()) {
-            navigate("/home");
+            navigate("/");
         }
     }
 
@@ -65,7 +65,7 @@ export default function SignUp() {
             state.merge({ validLastName: true, });
         }
 
-        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+        if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))) {
             state.merge({ validEmail: false })
         } else {
             state.merge({ validEmail: true, });
