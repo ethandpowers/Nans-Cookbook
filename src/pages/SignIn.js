@@ -14,6 +14,7 @@ import { useState } from '@hookstate/core';
 import { Link as RouteLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { isLoggedIn, logIn, logOut } from '../firebase';
+import globalState from '../store';
 
 import Food1 from '../assets/food1.jpeg'
 import Food2 from '../assets/food2.jpeg'
@@ -28,6 +29,8 @@ import Food9 from '../assets/food9.jpeg'
 const theme = createTheme();
 
 export default function SignIn() {
+    const gState = useState(globalState)
+    gState.set({});
     logOut();
     const state = useState(
         {

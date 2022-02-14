@@ -13,10 +13,13 @@ import { useState } from '@hookstate/core';
 import { newUser, isLoggedIn, logOut } from '../firebase'
 import { Link as RouteLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import globalState from '../store';
 
 const theme = createTheme();
 
 export default function SignUp() {
+    const gState = useState(globalState)
+    gState.set({});
     logOut();
     const state = useState(
         {
