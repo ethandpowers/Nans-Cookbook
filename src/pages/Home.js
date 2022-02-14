@@ -14,19 +14,20 @@ import { useHookstate, useState } from '@hookstate/core';
 import { getUserDocID } from '../firebase';
 import globalState from '../store.js';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { db } from "../firebase";
 
 function Home() {
 
-    //I am well aware that this is rather mesy, but IDK when I try to use a generic state, I keep gettings errors.  At leat this is functional
+    //I am well aware that this is rather messy, but IDK when I try to use a generic state, I keep gettings errors.  At least this is functional
     const auth = getAuth();
+    const gState = useHookstate(globalState)
     const authState = useState(true)
     const authenticated = authState.get()
     onAuthStateChanged(auth, (user => {
         try {
             if (!user) {
                 authState.set(false)
-            }else if (!gState.get().userDocID){
+            } else if (!gState.get().userDocID) {
                 getUserDocID().then((id) => {
                     gState.merge({
                         userDocID: id,
@@ -35,8 +36,6 @@ function Home() {
             }
         } catch (error) { }
     }))
-
-    const gState = useHookstate(globalState)
 
     const [pageState] = React.useState(
         {
@@ -87,8 +86,8 @@ function Home() {
             <div className='container'>
 
                 <Search render={pageState.renderSearch} bottomPadding={navRef.current.clientHeight} />
-                <Recipes render={pageState.renderRecipes} />
-                <Settings render={pageState.renderSettings} />
+                <Recipes render={pageState.renderRecipes} bottomPadding={navRef.current.clientHeight} />
+                <Settings render={pageState.renderSettings} bottomPadding={navRef.current.clientHeight} />
 
                 <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, }} elevation={3} ref={navRef} >
                     <BottomNavigation

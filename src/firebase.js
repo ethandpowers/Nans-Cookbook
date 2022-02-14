@@ -24,7 +24,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence)
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 //called upon the creation of a new user
 async function addUserDoc(firstName, lastName) {
@@ -48,9 +48,9 @@ export async function getUserDocID(){
     return (await getUserDoc()).id;
 }
 
-export async function getUserDocSnapshot() {
+export async function getUserDocSnapshot(id) {
     if (auth.currentUser) {
-        return doc(db, 'users', (await getUserDoc()).id)
+        return doc(db, 'users', id)
     }else{
         return null;
     }
