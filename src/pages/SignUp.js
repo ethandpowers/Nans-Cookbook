@@ -13,7 +13,6 @@ import { useState } from '@hookstate/core';
 import { newUser, isLoggedIn, logOut } from '../firebase'
 import { Link as RouteLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import globalState from '../store.js'
 
 const theme = createTheme();
 
@@ -27,8 +26,6 @@ export default function SignUp() {
             validLastName: true,
         }
     );
-
-    const gState = useState(globalState);
 
     const navigate = useNavigate();
     const redirectHome = () => {
@@ -80,12 +77,7 @@ export default function SignUp() {
         if (state.get().validEmail && state.get().validPassword && state.get().validFirstName && state.get().validLastName) {
             //code inside this if-statement will only execute if all form data is valid
             console.log('creating new user')
-            let docRef = await newUser(email, password, firstName, lastName)
-            gState.merge(
-                {
-                    userDoc: docRef,
-                }
-            );
+            await newUser(email, password, firstName, lastName)
             redirectHome();
         }
     };

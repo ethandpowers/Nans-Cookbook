@@ -10,20 +10,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import Search from '../components/Search.js'
 import Recipes from '../components/Recipes.js'
 import Settings from '../components/Settings.js'
-import { useState } from '@hookstate/core';
+import { useHookstate, useState } from '@hookstate/core';
+import { getUserDocID } from '../firebase';
+import globalState from '../store.js';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function Home() {
-    const [pageState, setPageState] = React.useState(
-        {
-            renderSearch: false,
-            renderRecipes: true,
-            renderSettings: false,
-        }
-    )
-
-    const [bottomNavValue, setBottomNav] = React.useState(1);
-    const navRef = React.useRef('navRef');
-
 
     //I am well aware that this is rather mesy, but IDK when I try to use a generic state, I keep gettings errors.  At leat this is functional
     const auth = getAuth();
@@ -33,11 +26,28 @@ function Home() {
         try {
             if (!user) {
                 authState.set(false)
+            }else if (!gState.get().userDocID){
+                getUserDocID().then((id) => {
+                    gState.merge({
+                        userDocID: id,
+                    })
+                })
             }
         } catch (error) { }
     }))
 
+    const gState = useHookstate(globalState)
 
+    const [pageState] = React.useState(
+        {
+            renderSearch: false,
+            renderRecipes: true,
+            renderSettings: false,
+        }
+    )
+
+    const [bottomNavValue, setBottomNav] = React.useState(1);
+    const navRef = React.useRef('navRef');
 
     const handleBottomNav = (event, newValue) => {
         setBottomNav(newValue);
@@ -66,6 +76,12 @@ function Home() {
 
     if (!authenticated) {
         return <Navigate to="/signin"></Navigate>
+    } else if (!gState.get().userDocID) {
+        return (
+            <div className="container centerScreen">
+                <CircularProgress />
+            </div>
+        )
     } else {
         return (
             <div className='container'>

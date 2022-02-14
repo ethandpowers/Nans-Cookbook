@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore"
+import { getFirestore, collection, addDoc, query, where, getDocs, doc } from "firebase/firestore"
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -37,11 +37,23 @@ async function addUserDoc(firstName, lastName) {
     return docRef;
 }
 
-//celled whenever the user first LOGS in.  It returns a the document associated with a uid.
-async function getUserDoc() {
+//returns a the document associated with the current user
+export async function getUserDoc() {
     let q = query(collection(db, "users"), where("uid", "==", auth.currentUser.uid));
     let snapshot = await getDocs(q);
     return snapshot.docs[0];
+}
+
+export async function getUserDocID(){
+    return (await getUserDoc()).id;
+}
+
+export async function getUserDocSnapshot() {
+    if (auth.currentUser) {
+        return doc(db, 'users', (await getUserDoc()).id)
+    }else{
+        return null;
+    }
 }
 
 export async function newUser(email, password, firstName, lastName) {

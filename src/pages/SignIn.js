@@ -14,7 +14,6 @@ import { useState } from '@hookstate/core';
 import { Link as RouteLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { isLoggedIn, logIn, logOut } from '../firebase';
-import globalState from '../store.js'
 
 import Food1 from '../assets/food1.jpeg'
 import Food2 from '../assets/food2.jpeg'
@@ -36,8 +35,6 @@ export default function SignIn() {
             validPassword: true
         }
     );
-
-    const gState = useState(globalState);
 
     const navigate = useNavigate();
     const redirectHome = () => {
@@ -69,12 +66,7 @@ export default function SignIn() {
 
         if(state.get().validEmail && state.get().validPassword){
             console.log('form validated')
-            let docRef = await logIn(email, password);
-            gState.merge(
-                {
-                    userDoc: docRef,
-                }
-            );
+            await logIn(email, password);
             redirectHome();
         }
     };

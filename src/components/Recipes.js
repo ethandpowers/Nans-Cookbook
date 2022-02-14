@@ -7,7 +7,7 @@ export default function Recipes(props){
 
     
     return(
-        <div className="fullView" style={{paddingBottom: props.bottomPadding}}>
+        <div className="fullWidth" style={{paddingBottom: props.bottomPadding}}>
             <h1>Recipes</h1>
         </div>
     )
