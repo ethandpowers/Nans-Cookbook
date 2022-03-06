@@ -16,7 +16,6 @@ export default function Recipes(props) {
 
     const unsub = onSnapshot(doc(db, "users", gState.get().userDocID), (doc) => {
         userDocState.set(doc.data());
-        console.log(userDocState.get())
     });
 
 

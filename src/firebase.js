@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, query, where, getDocs, doc } from "firebase/firestore"
+import { getFirestore, collection, addDoc, query, where, getDocs, doc, updateDoc } from "firebase/firestore"
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -44,14 +44,14 @@ export async function getUserDoc() {
     return snapshot.docs[0];
 }
 
-export async function getUserDocID(){
+export async function getUserDocID() {
     return (await getUserDoc()).id;
 }
 
 export async function getUserDocSnapshot(id) {
     if (auth.currentUser) {
         return doc(db, 'users', id)
-    }else{
+    } else {
         return null;
     }
 }
@@ -88,4 +88,10 @@ export function isLoggedIn() {
 export function logOut() {
     console.log('logging out')
     signOut(auth);
+}
+
+export async function updateDislikes(dislikes, docId) {
+    await updateDoc(doc(db, "users", docId), {
+        dislikes: dislikes
+    })
 }
