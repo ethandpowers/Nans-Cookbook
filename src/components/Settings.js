@@ -68,7 +68,7 @@ export default function Settings(props) {
         for (let i = 0; i < dislikes.length; i++) {
             newDislikes[i] = dislikes[i]
         }
-        if (newChipVal != '' && !newDislikes.includes(newChipVal)) {
+        if (newChipVal !== '' && !newDislikes.includes(newChipVal)) {
             newDislikes.push(newChipVal)
             updateDislikes(newDislikes, docId)
         }

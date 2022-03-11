@@ -14,7 +14,6 @@ import { useHookstate, useState } from '@hookstate/core';
 import { getUserDocID } from '../firebase';
 import globalState from '../store.js';
 import CircularProgress from '@mui/material/CircularProgress';
-import { db } from "../firebase";
 
 function Home() {
 
