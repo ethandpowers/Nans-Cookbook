@@ -61,4 +61,16 @@
 .preview{
     margin-top: 10px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.clickable{
+    cursor:pointer;
+}
+
+@media screen and (max-width: 1200px) {
+    .preview{
+        flex-direction: column;
+    }
 }

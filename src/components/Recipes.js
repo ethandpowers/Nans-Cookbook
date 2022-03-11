@@ -6,6 +6,9 @@ import RecipePreview from "./RecipePreview";
 import * as React from "react";
 import { Virtuoso } from 'react-virtuoso'
 import { isNotRestricted } from "../Filter";
+import FullRecipe from "./FullRecipe";
+import { Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 export default function Recipes(props) {
@@ -50,7 +53,12 @@ export default function Recipes(props) {
 
     if (recipeToRender.get()) {
         return (
-            <h1>full recipe here</h1>
+            <div className="fullWidth fullHeight" style={{ paddingBottom: props.bottomPadding }}>
+                <Button startIcon={<ArrowBackIcon />} onClick={() => {recipeToRender.set(null)}}>
+                    Back
+                </Button>
+                <FullRecipe recipe={recipeToRender.get()}></FullRecipe>
+            </div>
         )
     } else {
         return (
@@ -61,7 +69,7 @@ export default function Recipes(props) {
                     endReached={loadItems}
                     overscan={0}
                     itemContent={(index, recipe) => {
-                        return <RecipePreview recipe={recipe}></RecipePreview>
+                        return <div className="clickable" onClick={() => { recipeToRender.set(recipe); console.log(recipe) }}><RecipePreview recipe={recipe}></RecipePreview></div>
                     }}
                 />
             </div>
