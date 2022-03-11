@@ -1,8 +1,13 @@
 import { Card, ListGroup } from "react-bootstrap";
+import * as React from 'react'
 
 
 
 export default function FullRecipe({ recipe }) {
+
+    React.useEffect(() => {
+        window.scrollTo(0, 0)
+    })
 
     const getIngredients = () => {
         let ingredients = []

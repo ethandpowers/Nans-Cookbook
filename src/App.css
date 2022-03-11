@@ -95,6 +95,14 @@
     justify-content: center;
 }
 
+.searchForm{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 @media screen and (max-width: 1200px) {
     .preview{
         flex-direction: column;
