@@ -37,7 +37,13 @@ export default function Recipes(props) {
             .then(res => res.json())
             .then(
                 (result) => {
-                    setRecipes([...recipes, ...result.meals])
+                    let filteredRes = []
+                    result.meals.forEach((meal) => {
+                        if (isNotRestricted(meal, userDocState.get().dislikes)){
+                            filteredRes.push(meal)
+                        }
+                    })
+                    setRecipes([...recipes, ...filteredRes])
                     console.log(recipes)
                 },
                 (error) => {
@@ -53,11 +59,12 @@ export default function Recipes(props) {
 
     if (recipeToRender.get()) {
         return (
-            <div className="fullWidth fullHeight" style={{ paddingBottom: props.bottomPadding }}>
-                <Button startIcon={<ArrowBackIcon />} onClick={() => {recipeToRender.set(null)}}>
+            <div className="fullWidth fullHeight recipeDiv">
+                <Button className="backButton" startIcon={<ArrowBackIcon />} onClick={() => { recipeToRender.set(null) }}>
                     Back
                 </Button>
                 <FullRecipe recipe={recipeToRender.get()}></FullRecipe>
+                <div style={{ paddingBottom: props.bottomPadding }}></div>
             </div>
         )
     } else {

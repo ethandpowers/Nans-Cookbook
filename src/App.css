@@ -69,8 +69,39 @@
     cursor:pointer;
 }
 
+.recipeDiv{
+    margin-top: 10px;
+}
+
+.testDiv{
+    background-color: aquamarine;
+    border: black;
+    border-style: solid;
+    width: 100%;
+    height: 300px;
+}
+
+.video{
+    width: 1120px;
+    height: 630px;
+    align-self: center;
+}
+
+.videoDiv{
+    width: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 @media screen and (max-width: 1200px) {
     .preview{
         flex-direction: column;
+    }
+
+    .video{
+        width: 100%;
+        height: 50vw
     }
 }

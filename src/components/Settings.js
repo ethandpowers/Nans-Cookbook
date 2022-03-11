@@ -62,7 +62,8 @@ export default function Settings(props) {
         setNewChipVal(event.target.value)
     }
 
-    const handleAdd = () => {
+    const handleAdd = (event) => {
+        event.preventDefault()
         let dislikes = userDocState.get().dislikes
         let newDislikes = []
         for (let i = 0; i < dislikes.length; i++) {
@@ -72,6 +73,7 @@ export default function Settings(props) {
             newDislikes.push(newChipVal)
             updateDislikes(newDislikes, docId)
         }
+        setNewChipVal('')
     }
 
     let dislikes = userDocState.get().dislikes.map(item => <div className="chipDiv" key={item}><Chip label={item} onDelete={handleDelete(item)}></Chip></div>)
@@ -80,23 +82,24 @@ export default function Settings(props) {
         <div className="fullWidth" style={{ paddingBottom: props.bottomPadding }}>
             <List>
                 <ListItem id="chipSection">
-                    Ingredients to exclude:
+                    Restricted Ingredients:
                     <div id="chips">{dislikes}</div>
                     <Box
                         id="newChip"
                         component="form"
+                        onSubmit={handleAdd}
                         noValidate
                         autoComplete="off"
                     >
                         <TextField
-                            label="Exclude Another Ingredient"
+                            label="Restrict Another Ingredient"
                             value={newChipVal}
                             onChange={updateNewChipVal}
                         />
                         <Button
                             id="addChipButton"
                             variant="contained"
-                            onClick={handleAdd}
+                            type="submit"
                         >
                             Add
                         </Button>

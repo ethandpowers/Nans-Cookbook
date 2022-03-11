@@ -14,6 +14,7 @@ export default function RecipePreview({ recipe }) {
             <Card.Body>
                 <Card.Title>{recipe.strMeal}</Card.Title>
                 {loadIfLarge(<Card.Subtitle>Category: {recipe.strCategory}</Card.Subtitle>)}
+                {loadIfLarge(<br></br>)}
                 {loadIfLarge(<Card.Text>{recipe.strInstructions}</Card.Text>)}
             </Card.Body>
         </Card>
