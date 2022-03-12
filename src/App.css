@@ -103,6 +103,10 @@
     justify-content: center;
 }
 
+.roundedCorners{
+    border-radius: 5px;
+}
+
 @media screen and (max-width: 1200px) {
     .preview{
         flex-direction: column;

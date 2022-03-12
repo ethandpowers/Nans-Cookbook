@@ -49,7 +49,7 @@ export default function FullRecipe({ recipe }) {
     return (
         <div>
             <div className="preview">
-                <img src={recipe.strMealThumb} alt="thumbnail"></img>
+                <img className="roundedCorners" src={recipe.strMealThumb} alt="thumbnail"></img>
                 <Card.Body>
                     <Card.Title>{recipe.strMeal}</Card.Title>
                     <Card.Subtitle>Category: {recipe.strCategory} | Cuisine: {recipe.strArea}</Card.Subtitle>
