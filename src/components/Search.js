@@ -41,7 +41,6 @@ export default function Recipes(props) {
                         }
                     })
                     setRecipes([...filteredRes])
-                    console.log(recipes)
                 },
                 (error) => {
                     console.error(error)

@@ -33,7 +33,6 @@ export default function FullRecipe({ recipe }) {
 
     const modifyEmbededVideo = (url) => {
         url = url.replace('watch?v=', 'embed/')
-        console.log(url)
         return url
     }
 

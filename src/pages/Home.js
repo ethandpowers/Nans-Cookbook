@@ -22,6 +22,8 @@ function Home() {
     const gState = useHookstate(globalState)
     const authState = useState(true)
     const authenticated = authState.get()
+    const navRef = React.useRef({clientHeight: 55})
+
     onAuthStateChanged(auth, (user => {
         try {
             if (!user) {
@@ -45,7 +47,6 @@ function Home() {
     )
 
     const [bottomNavValue, setBottomNav] = React.useState(1);
-    const navRef = React.useRef('navRef');
 
     const handleBottomNav = (event, newValue) => {
         setBottomNav(newValue);

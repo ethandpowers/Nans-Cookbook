@@ -32,7 +32,8 @@ export default function Recipes(props) {
         if (recipes.length === 0) loadItems()
     })
 
-    const loadItems = () => {
+    const loadItems = async () => {
+        console.log(recipes)
         fetch("https://www.themealdb.com/api/json/v2/9973533/randomselection.php")
             .then(res => res.json())
             .then(
@@ -44,7 +45,6 @@ export default function Recipes(props) {
                         }
                     })
                     setRecipes([...recipes, ...filteredRes])
-                    console.log(recipes)
                 },
                 (error) => {
                     console.error(error)
