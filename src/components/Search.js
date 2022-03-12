@@ -77,7 +77,7 @@ export default function Recipes(props) {
         )
     } else {
         return (
-            <div className="fullWidth fullHeight" style={{ paddingBottom: props.bottomPadding }}>
+            <div className="fullWidth">
                 <Box
                     id="newChip"
                     component="form"
@@ -100,6 +100,7 @@ export default function Recipes(props) {
                     </Button>
                 </Box>
                 {recipes.map(recipe => <div className="clickable" onClick={() => { recipeToRender.set(recipe); console.log(recipe) }}><RecipePreview recipe={recipe}></RecipePreview></div>)}
+                <div style={{ paddingBottom: props.bottomPadding }}></div>
             </div>
         )
     }
